@@ -1,98 +1,333 @@
-# selection-sort
-# Selection Sort Algorithm in C++
+# Stooge Sort (C++ Implementation)
 
-## Introduction
+## Overview
 
-Selection Sort is a simple comparison-based sorting algorithm.
-It repeatedly selects the smallest element from the unsorted portion of the array and moves it to its correct position.
+Stooge Sort is a recursive, comparison-based sorting algorithm known for its extremely poor time complexity. Although it is not practical for real-world applications, it is often used in computer science education to demonstrate recursion and algorithm analysis.
 
-This project demonstrates the implementation of Selection Sort using C++.
+The algorithm repeatedly sorts overlapping sections of an array until the entire array becomes ordered.
 
 ---
 
-##  What is Selection Sort?
+# Example Array
 
-Selection Sort divides the array into two parts:
+```cpp
+int arr[] = {8,3,5,1,9,2};
+```
 
-1. Sorted portion (left side)
-2. Unsorted portion (right side)
+### Memory Representation
 
-At each step:
+| Index | Value |
+| ----- | ----- |
+| 0     | 8     |
+| 1     | 3     |
+| 2     | 5     |
+| 3     | 1     |
+| 4     | 9     |
+| 5     | 2     |
 
-* The smallest element in the unsorted portion is found.
-* It is swapped with the first unsorted element.
-* The boundary between sorted and unsorted portions moves one step forward.
+### Goal
 
----
+Sort the array in **ascending order**:
 
-##  How the Algorithm Works (Step-by-Step)
-
-For an array of size n:
-
-1. Start at index 0.
-2. Assume the first element is the smallest.
-3. Compare it with all remaining elements.
-4. Find the actual smallest element.
-5. Swap it with the first position.
-6. Move to the next index.
-7. Repeat until n-1 passes are completed.
-
-After each pass, one element is placed in its correct sorted position.
+```
+1 2 3 5 8 9
+```
 
 ---
 
-##  Time Complexity
+# Function Parameters
 
-Selection Sort always performs the same number of comparisons regardless of input order.
+The sorting function is called as:
 
-* Best Case: O(n²)
-* Average Case: O(n²)
-* Worst Case: O(n²)
+```
+stoogeSort(arr, l, h)
+```
 
-Reason:
-Two nested loops are used, resulting in n × n comparisons.
+| Variable | Meaning                       |
+| -------- | ----------------------------- |
+| arr      | The array being sorted        |
+| l        | Left index (start of section) |
+| h        | Right index (end of section)  |
 
----
+### Example Function Call
 
-## Space Complexity
+```
+stoogeSort(arr,0,5)
+```
 
-* O(1)
+Meaning:
 
-Selection Sort is an in-place sorting algorithm.
-It does not require extra memory beyond a temporary variable for swapping.
-
----
-
-##  Stability
-
-Selection Sort is NOT stable by default.
-Equal elements may change their relative order after sorting.
+Sort the array from **index 0 to index 5**.
 
 ---
 
-## Advantages
+# Step-by-Step Operation
 
-* Simple to understand and implement
-* Works well for small datasets
-* Requires no extra memory
+## 1. Compare First and Last Elements
+
+```cpp
+if(arr[l] > arr[h])
+```
+
+Example:
+
+```
+arr[0] = 8
+arr[5] = 2
+```
+
+Since:
+
+```
+8 > 2
+```
+
+Swap them.
+
+Array becomes:
+
+```
+[2,3,5,1,9,8]
+```
+
+### Purpose
+
+This step pushes:
+
+* larger numbers toward the **right**
+* smaller numbers toward the **left**
 
 ---
 
-##  Disadvantages
+## 2. Check Section Size
 
-* Inefficient for large datasets
-* Always performs O(n²) comparisons
-* Slower than modern algorithms like Merge Sort or Quick Sort
+```cpp
+if(h - l + 1 > 2)
+```
+
+Formula for size:
+
+```
+size = h - l + 1
+```
+
+Example:
+
+```
+h = 5
+l = 0
+
+size = 5 - 0 + 1 = 6
+```
+
+Since:
+
+```
+6 > 2
+```
+
+The algorithm continues recursion.
+
+If the section size is **1 or 2**, it is already sorted.
 
 ---
 
-## Implementation Language
+## 3. Calculate t (One Third of Section)
 
-C++
+```cpp
+int t = (h - l + 1) / 3;
+```
+
+Example:
+
+```
+size = 6
+t = 6 / 3 = 2
+```
+
+This value helps determine the **2/3 segments** of the array.
 
 ---
 
-##  Conclusion
+## 4. First Recursive Call
 
-Selection Sort is useful for educational purposes to understand sorting logic and algorithm behavior.
-However, for large datasets, more efficient algorithms such as Quick Sort or Merge Sort should be used.
+```
+stoogeSort(arr, l, h - t);
+```
+
+Substitute values:
+
+```
+l = 0
+h = 5
+t = 2
+```
+
+Call becomes:
+
+```
+stoogeSort(arr,0,3)
+```
+
+This sorts the first part:
+
+```
+[2,3,5,1]
+```
+
+---
+
+## 5. Second Recursive Call
+
+```
+stoogeSort(arr, l + t, h);
+```
+
+Substitute values:
+
+```
+l = 0
+t = 2
+h = 5
+```
+
+Call becomes:
+
+```
+stoogeSort(arr,2,5)
+```
+
+This sorts:
+
+```
+[5,1,9,8]
+```
+
+---
+
+## 6. Third Recursive Call
+
+```
+stoogeSort(arr, l, h - t);
+```
+
+Again:
+
+```
+stoogeSort(arr,0,3)
+```
+
+### Why repeat?
+
+Sorting the second section may disturb the order of overlapping elements.
+This third call corrects that.
+
+---
+
+# Overlapping Sections
+
+First section:
+
+```
+0 1 2 3
+```
+
+Second section:
+
+```
+2 3 4 5
+```
+
+Shared indexes:
+
+```
+2 and 3
+```
+
+This overlapping process slowly moves elements to their correct positions.
+
+---
+
+# Visual Progress
+
+Initial array:
+
+```
+[8,3,5,1,9,2]
+```
+
+After first swap:
+
+```
+[2,3,5,1,9,8]
+```
+
+After recursive operations:
+
+```
+[1,2,3,5,8,9]
+```
+
+---
+
+# Key Variables
+
+| Variable | Meaning                                 |
+| -------- | --------------------------------------- |
+| arr      | Array being sorted                      |
+| l        | Start index                             |
+| h        | End index                               |
+| t        | One-third size of the current section   |
+| temp     | Temporary variable used during swapping |
+
+---
+
+# Core Algorithm Logic
+
+Stooge Sort repeatedly performs:
+
+```
+1. Fix the first and last element
+2. Sort the first 2/3 of the array
+3. Sort the last 2/3 of the array
+4. Sort the first 2/3 again
+```
+
+Each recursive call performs the same steps until the array is sorted.
+
+---
+
+# Time Complexity
+
+Worst-case time complexity:
+
+```
+O(n^2.709)
+```
+
+This makes Stooge Sort **much slower than common algorithms** such as:
+
+| Algorithm   | Complexity |
+| ----------- | ---------- |
+| Bubble Sort | O(n²)      |
+| Merge Sort  | O(n log n) |
+| Quick Sort  | O(n log n) |
+| Stooge Sort | O(n^2.709) |
+
+---
+
+# Why the Name "Stooge Sort"
+
+The algorithm is named after **The Three Stooges**, because it repeatedly performs three similar recursive operations, resembling the repetitive comedic actions of the trio.
+
+---
+
+# Summary
+
+Stooge Sort is mainly a **teaching algorithm** used to demonstrate recursion and algorithm analysis.
+
+In simple terms:
+
+```
+Stooge Sort repeatedly sorts overlapping 2/3 sections of an array until the entire array becomes ordered.
+```
