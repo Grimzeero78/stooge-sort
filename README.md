@@ -1,12 +1,17 @@
 # Stooge Sort (C++ Implementation)
 
 ## Overview
+whats stooge sort??
+Stooge Sort is a recursive,divide and conquer comparison-based sorting algorithm known for its extremely poor time complexity. Although it is not practical for real-world applications, it is often used in computer science education to demonstrate recursion and algorithm analysis.
 
-Stooge Sort is a recursive, comparison-based sorting algorithm known for its extremely poor time complexity. Although it is not practical for real-world applications, it is often used in computer science education to demonstrate recursion and algorithm analysis.
+ what are the best,worst and average case scenarios?
+
+Best case occurs when the array is already sorted in ascending order.
+Worst case occurs when the array is in descending order.
+On average, Stooge Sort still recursively sorts 2/3 of the array three times
 
 The algorithm repeatedly sorts overlapping sections of an array until the entire array becomes ordered.
 
----
 
 # Example Array
 
