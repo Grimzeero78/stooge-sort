@@ -1,3 +1,4 @@
+EB3/67226/23 ISAAC NJUGUNA BRIDGET
 # Stooge Sort (C++ Implementation)
 
 ## Overview
