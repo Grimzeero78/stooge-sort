@@ -11,7 +11,7 @@ answer is yes.since it divides the array into parts
 azin(first 2/3,last 2/3 and first 2/3 again).
 then it recursively solves the arry and combines it again when sorted.
 
-**implemetation part **
+**implemetation part**
 **how does stooge actually work??**
 
 **initial array[8,2,4,5]**
