@@ -1,7 +1,7 @@
-#ISAAC NJUGUNA BRIDGET
-#EB3/67226/23
+**ISAAC NJUGUNA BRIDGET**
+**EB3/67226/23**
 
-#Whats Stooge Sort?
+**Whats Stooge Sort?**
 This is a recursive sorting algorithm,it repeatedly sorts overlapping portions of an array.
 Not practical in real life since its slow but its good for study and research.
 So instead of dividing the arrayin half like the Merge sort it diveds the array in 2/3 sections and sorts them multiple times.It does this 3 times
